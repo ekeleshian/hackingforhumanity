@@ -1,7 +1,20 @@
-import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import * as firebase from 'firebase';
+
 import { AppLoading, Asset, Font, Icon } from 'expo';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+
 import AppNavigator from './navigation/AppNavigator';
+import React from 'react';
+
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "<YOUR-API-KEY>",
+  authDomain: "<YOUR-AUTH-DOMAIN>",
+  databaseURL: "<YOUR-DATABASE-URL>",
+  storageBucket: "<YOUR-STORAGE-BUCKET>"
+};
+
+firebase.initializeApp(firebaseConfig);
 
 export default class App extends React.Component {
   state = {

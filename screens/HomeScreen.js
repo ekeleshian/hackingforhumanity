@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Image,
   Platform,
@@ -8,9 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
+import React from 'react';
+import { WebBrowser } from 'expo';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -54,7 +54,7 @@ export default class HomeScreen extends React.Component {
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+          <Text style={styles.tabBarInfoText}>This is a really dope tab bar. You can edit it in:</Text>
 
           <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
             <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
@@ -74,8 +74,8 @@ export default class HomeScreen extends React.Component {
 
       return (
         <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
+          Get started by checking out what our organization is looking for.
+          {learnMoreButton}
         </Text>
       );
     } else {
