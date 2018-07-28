@@ -21,6 +21,7 @@
     "react-navigation": "^2.9.3"
   },
   "devDependencies": {
+    "firebase-tools": "^4.0.0",
     "jest-expo": "29.0.0"
   }
 }
