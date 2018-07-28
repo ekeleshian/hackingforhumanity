@@ -1,7 +1,6 @@
-import React from 'react';
-import { Icon } from 'expo';
-
 import Colors from '../constants/Colors';
+import { Icon } from '../../../../../Library/Caches/typescript/2.9/node_modules/@types/expo';
+import React from '../../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
 
 export default class TabBarIcon extends React.Component {
   render() {

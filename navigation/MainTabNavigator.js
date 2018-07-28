@@ -1,11 +1,11 @@
-import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'expo';
 
-import TabBarIcon from '../components/TabBarIcon';
+import CaptureScreen from '../screens/CaptureScreen';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import { Platform } from 'react-native';
+import React from 'react';
 import SettingsScreen from '../screens/SettingsScreen';
+import TabBarIcon from '../components/TabBarIcon';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -26,7 +26,7 @@ HomeStack.navigationOptions = {
 };
 
 const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+  Links: CaptureScreen,
 });
 
 LinksStack.navigationOptions = {

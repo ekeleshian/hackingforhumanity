@@ -54,7 +54,7 @@ export default class HomeScreen extends React.Component {
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a really dope tab bar. You can edit it in:</Text>
+          <Text style={styles.tabBarInfoText}></Text>
 
           <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
             <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>

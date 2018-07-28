@@ -1,10 +1,11 @@
-import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
 
-export default class LinksScreen extends React.Component {
+import { Camera } from '../components/Capture';
+import React from '../../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
+
+export default class CaptureScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: 'Capture',
   };
 
   render() {
