@@ -8,6 +8,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { RNCamera } from 'react-native-camera';
 
 import { subscribe_donor_alert_number, post_image_data_for_analysis } from './api';
 
@@ -24,6 +25,13 @@ export default class App extends Component<Props> {
   add_phone_number = async subscribe_to_alerts_phone_number => {
     const result = await subscribe_donor_alert_number({ subscribe_to_alerts_phone_number });
     this.setState(() => ({ result }));
+  };
+
+  take_picture = async camera => {
+    const options = { quality: 0.5, base64: true };
+    const data = await camera.takePictureAsync(options);
+    //  eslint-disable-next-line
+    console.log(data.uri);
   };
 
   render() {
