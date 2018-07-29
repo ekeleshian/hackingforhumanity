@@ -8,6 +8,31 @@ const plivo_provider = require('./plivo')(config.plivo, config.phone_numbers);
 
 const { BULK_LIMIT } = sms_provider;
 
+const INITIAL_TEXT_ORGANIZATION = `Hi`.trimLeft();
+
+const INITIAL_TEXT = `Hi,`.trimLeft();
+
+const is_phone_number = phone_number => /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(phone_number);
+
+
+const is_bad_phone_number_candidate = phone_number =>
+  !phone_number || typeof phone_number !== 'string' || !is_phone_number(phone_number);
+
+const send_failure = (response, reason) =>
+  response.send(JSON.stringify({
+    result: 'failure',
+    reason
+  }));
+
+function object_values(obj) {
+  const res = [];
+  for (const i in obj) {
+    if (obj.hasOwnProperty(i)) {
+      res.push(obj[i]);
+    }
+  }
+  return res;
+}
 
 const mlFunctionStub = () => null;
 
@@ -37,6 +62,59 @@ exports.accept_photo_upload = functions.https.onCall((data, context) => {
 
 exports.subscribe_donor_alert_number = functions.https.onCall((data, context) => {
   const { subscribe_to_alerts_phone_number } = data;
+    try {
+      const {
+        phone_number,
+        signup_as,
+        is_beeline
+      } = data;
+      check_params(phone_number, signup_as);
+      const with_no_spaces_phone_number = phone_number.replace(/-/g, '').replace(/ /g, '');
+      const is_not_well_formatted = is_bad_phone_number_candidate(with_no_spaces_phone_number);
+      if (is_not_well_formatted) {
+        console.info({
+          msg: `Non Armenian mobile phone provided`,
+          raw_body: data
+        });
+        throw new functions.https.HttpsError('invalid-argument', 'Only Armenian numbers accepted');
+      } else {
+        return check_if_user_already_exists(with_no_spaces_phone_number)
+          .then(({
+            user_already_exists,
+            user
+          }) => {
+            if (user_already_exists) {
+              console.warn(`${phone_number} already had account`);
+              throw new functions.https.HttpsError(
+                'invalid-argument',
+                'Phone number already registered '
+              );
+            } else {
+              return persist_new_user({
+                phone_number: with_no_spaces_phone_number,
+                signup_as,
+              });
+            }
+          })
+          .then(increment_total_user_count)
+          .then(() => {
+            let message = INITIAL_TEXT;
+            RECEIPENT_T.GOVERNMENT === signup_as && (message = INITIAL_TEXT_GOV_WORKER);
+            return sms_provider.send_message({
+              content: message,
+              to: [with_no_spaces_phone_number]
+            });
+          })
+          .then(msg_queue => ({
+            result: 'success'
+          }));
+      }
+    } catch (e) {
+      return Promise.resolve({
+        result: 'failure',
+        reason: e.message
+      });
+    }
   return { foo: 'bar' };
 });
 
@@ -65,3 +143,4 @@ exports.check_if_send_sms = functions.database
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 // });
+
