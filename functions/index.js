@@ -22,19 +22,14 @@ const write_image_analysis_result = (image_data, ml_results) => {
 };
 
 exports.accept_photo_upload = functions.https.onCall((data, context) => {
-  const { photoImageBase64 } = data;
-  const imageMLResults = mlFunctionStub(photoImageBase64);
-
+  const { base_64_image_data } = data;
+  const imageMLResults = mlFunctionStub(base_64_image_data);
   // Write code to the DB about the results
   return JSON.stringify(imageMLResults);
 });
 
-exports.basic_sanity_test = functions.https.onCall((data, context) => {
-  console.log('Yes called');
-  // const { photoImageBase64 } = data;
-  // const imageMLResults = mlFunctionStub(photoImageBase64);
-
-  // Write code to the DB about the results
+exports.subscribe_donor_alert_number = functions.https.onCall((data, context) => {
+  const { subscribe_to_alerts_phone_number } = data;
   return { foo: 'bar' };
 });
 
