@@ -15,4 +15,8 @@ const config = {
 
 firebase.initializeApp(config);
 
-export default () => null;
+const do_subscribe_new_number = firebase.functions().httpsCallable('basic_sanity_test');
+
+const post_image_data_for_analysis = firebase.functions().httpsCallable('accept_photo_upload');
+
+export default { do_subscribe_new_number, post_image_data_for_analysis };

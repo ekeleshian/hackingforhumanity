@@ -15,8 +15,11 @@ type Props = {};
 export default class App extends Component<Props> {
   state = { result: null };
 
+  // post_image_data =
+
   handle_api_test = async () => {
-    this.setState(() => ({ result: { hello: 'world' } }));
+    const result = await api.do_subscribe_new_number({});
+    this.setState(() => ({ result }));
     // console.log('helloe');
   };
 

@@ -6,14 +6,14 @@ const mlFunctionStub = () => null;
 
 admin.initializeApp();
 
-const write_image_analysis_result = imageData => {
+const write_image_analysis_result = (image_data, ml_results) => {
   return admin
     .database()
     .ref('/donations/images-submitted')
     .push()
     .then(({ key }) => {
       const updates = {};
-      updates[`/donations/${key}/verified-good`] = { imageData };
+      updates[`/donations/${key}/verified-good`] = { image_data, ml_results };
       return admin
         .database()
         .ref()
@@ -29,11 +29,20 @@ exports.accept_photo_upload = functions.https.onCall((data, context) => {
   return JSON.stringify(imageMLResults);
 });
 
+exports.basic_sanity_test = functions.https.onCall((data, context) => {
+  console.log('Yes called');
+  // const { photoImageBase64 } = data;
+  // const imageMLResults = mlFunctionStub(photoImageBase64);
+
+  // Write code to the DB about the results
+  return { foo: 'bar' };
+});
+
 exports.accept_donor_sms_reply = functions.https.onRequest((request, response) => {
   return 10;
 });
 
-exports.makeUppercase = functions.database
+exports.check_if_send_sms = functions.database
   .ref('/donations/{pushId}/verified-good')
   .onCreate((snapshot, context) => {
     // Grab the current value of what was written to the Realtime Database.
