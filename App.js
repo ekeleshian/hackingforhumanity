@@ -9,18 +9,21 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-import api from './api';
+import { subscribe_donor_alert_number, post_image_data_for_analysis } from './api';
 
 type Props = {};
+
 export default class App extends Component<Props> {
   state = { result: null };
 
-  // post_image_data =
-
-  handle_api_test = async () => {
-    const result = await api.do_subscribe_new_number({});
+  post_image_data = async base_64_image_data => {
+    const result = await post_image_data_for_analysis({ base_64_image_data });
     this.setState(() => ({ result }));
-    // console.log('helloe');
+  };
+
+  add_phone_number = async subscribe_to_alerts_phone_number => {
+    const result = await subscribe_donor_alert_number({ subscribe_to_alerts_phone_number });
+    this.setState(() => ({ result }));
   };
 
   render() {
@@ -30,7 +33,7 @@ export default class App extends Component<Props> {
         <Text style={styles.instructions}>
           To get started, prepare your donation items for a photo
         </Text>
-        <Button title={'Click to test API'} onPress={this.handle_api_test} />
+        <Button title={'Click to test API'} onPress={() => null} />
         <Text>API: {JSON.stringify(this.state.result, null, 2)}</Text>
       </View>
     );
