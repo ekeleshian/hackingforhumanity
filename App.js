@@ -7,23 +7,15 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'PressCmd+R to reload,\n' + 'Cmd+D or menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or'
-});
+import {StyleSheet, Text, View} from 'react-native';
 
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Wel</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Text style={styles.welcome}>Help Someone in Need.</Text>
+        <Text style={styles.instructions}>To get started, prepare your donation items for a photo</Text>
       </View>
     );
   }
@@ -39,6 +31,7 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 20,
     textAlign: 'center',
+    padding: 20,
     margin: 10,
   },
   instructions: {
